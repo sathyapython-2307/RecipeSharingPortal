@@ -1,0 +1,30 @@
+{% extends "base_recipe.html" %}
+
+{% block title %}{{ recipe.title }}{% endblock %}
+
+{% block content %}
+<div class="card shadow-sm mb-4">
+    {% if recipe.image %}
+        <img src="{{ url_for('static', filename='images/recipes/' + recipe.image) }}" class="card-img-top img-fluid" alt="{{ recipe.title }}" style="max-height: 400px; object-fit: cover;">
+    {% endif %}
+    <div class="card-body p-4">
+        <h1 class="card-title mb-3">{{ recipe.title }}</h1>
+        <p class="text-muted small mb-4">
+            Category: <span class="badge bg-secondary">{{ recipe.category }}</span> | Added: {{ recipe.date_added }}
+        </p>
+
+        <h4 class="mt-4 mb-3">Ingredients:</h4>
+        <ul class="list-group list-group-flush mb-4">
+            {% for ingredient in recipe.ingredients %}
+                <li class="list-group-item">{{ ingredient }}</li>
+            {% endfor %}
+        </ul>
+
+        <h4 class="mt-4 mb-3">Instructions:</h4>
+        <p class="card-text">{{ recipe.instructions }}</p>
+
+        <hr>
+        <a href="{{ url_for('recipe_list') }}" class="btn btn-secondary mt-3">Back to Recipes</a>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends "base_recipe.html" %}
+
+{% block title %}All Recipes{% endblock %}
+
+{% block content %}
+<h2 class="mb-4 text-center">Our Delicious Recipes</h2>
+
+<div class="row mb-4 justify-content-center">
+    <div class="col-md-6">
+        <form action="{{ url_for('recipe_list') }}" method="GET" class="d-flex align-items-center">
+            <label for="categoryFilter" class="form-label mb-0 me-2">Filter by Category:</label>
+            <select class="form-select me-2" id="categoryFilter" name="category" onchange="this.form.submit()">
+                <option value="All" {% if not selected_category or selected_category == 'All' %}selected{% endif %}>All Categories</option>
+                {% for category in categories %}
+                    <option value="{{ category }}" {% if selected_category == category %}selected{% endif %}>{{ category }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit" class="btn btn-outline-primary">Apply</button>
+        </form>
+    </div>
+</div>
+
+{% if recipes %}
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        {% for recipe in recipes %}
+        <div class="col">
+            <div class="card recipe-card shadow-sm">
+                {% if recipe.image %}
+                    <img src="{{ url_for('static', filename='images/recipes/' + recipe.image) }}" class="card-img-top recipe-card-img" alt="{{ recipe.title }}">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ recipe.title }}</h5>
+                    <p class="card-text"><small class="text-muted">Category: {{ recipe.category }}</small></p>
+                    <p class="card-text">{{ recipe.instructions[:100] }}...</p>
+                </div>
+                <div class="card-footer bg-white border-0">
+                    <a href="{{ url_for('recipe_detail', recipe_id=recipe.id) }}" class="btn btn-primary btn-sm">View Recipe</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <div class="alert alert-info text-center" role="alert">
+        No recipes found for the selected category.
+    </div>
+{% endif %}
+{% endblock %}

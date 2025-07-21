@@ -1,0 +1,15 @@
+{% extends "base_recipe.html" %}
+
+{% block title %}Welcome{% endblock %}
+
+{% block content %}
+<div class="jumbotron text-center bg-light p-5 rounded shadow-sm">
+    <h1 class="display-4">Welcome to the Recipe Sharing Portal!</h1>
+    <p class="lead">Discover and share delicious recipes from around the world.</p>
+    <hr class="my-4">
+    <div class="d-grid gap-2 col-md-6 mx-auto">
+        <a class="btn btn-primary btn-lg" href="{{ url_for('recipe_list') }}" role="button">View Recipes</a>
+        <a class="btn btn-outline-secondary btn-lg" href="{{ url_for('add_recipe') }}" role="button">Add Your Own Recipe</a>
+    </div>
+</div>
+{% endblock %}
